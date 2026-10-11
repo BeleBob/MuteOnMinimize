@@ -1,0 +1,13 @@
+# Build output and packages
+build/
+*.kwinscript
+*.plasmoid
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Local settings and secrets
+.env
+.claude/settings.local.json
