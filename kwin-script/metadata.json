@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "BeleBob"
+            }
+        ],
+        "Name": "Mute on Minimize",
+        "Name[ru]": "Тишина при сворачивании",
+        "Description": "Mutes selected applications while all their windows are minimized",
+        "Description[ru]": "Заглушает выбранные приложения, пока все их окна свёрнуты",
+        "Icon": "audio-volume-muted",
+        "Id": "muteonminimize",
+        "Version": "0.1.0",
+        "License": "GPL-3.0-or-later",
+        "Website": "https://github.com/BeleBob/MuteOnMinimize"
+    },
+    "X-Plasma-API": "javascript",
+    "X-Plasma-MainScript": "code/main.js",
+    "X-KDE-ConfigModule": "kwin/effects/configs/kcm_kwin4_genericscripted"
+}

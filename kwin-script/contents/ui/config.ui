@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MuteOnMinimizeConfig</class>
+ <widget class="QWidget" name="MuteOnMinimizeConfig">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelApplications">
+       <property name="text">
+        <string>Applications:</string>
+       </property>
+       <property name="buddy">
+        <cstring>kcfg_Applications</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="kcfg_Applications">
+       <property name="placeholderText">
+        <string>firefox, discord, steam_app_287700</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelHelp">
+     <property name="text">
+      <string>These applications are muted while all their windows are minimized. List window classes or desktop file names, separated by commas. To find a window's class, open System Settings → Window Management → Window Rules, add a rule and use Detect Window Properties.
+
+Requires the muteonminimized service.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
