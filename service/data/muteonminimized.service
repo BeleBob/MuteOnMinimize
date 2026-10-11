@@ -1,0 +1,12 @@
+[Unit]
+Description=Mute applications while their windows are minimized
+Documentation=https://github.com/BeleBob/MuteOnMinimize
+PartOf=graphical-session.target
+After=pipewire.service
+
+# Started on demand by D-Bus activation when the KWin script first calls it.
+[Service]
+Type=dbus
+BusName=io.github.belebob.MuteOnMinimize
+ExecStart=/usr/bin/muteonminimized
+Restart=on-failure

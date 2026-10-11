@@ -11,3 +11,6 @@ __pycache__/
 # Local settings and secrets
 .env
 .claude/settings.local.json
+
+# Rust
+target/
