@@ -8,7 +8,7 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 заглушаются, пока свёрнуты все их окна, и снова звучат, когда окно развернули.
 
 - Репозиторий: github.com/BeleBob/MuteOnMinimize (публичный), лицензия GPL-3.0-or-later.
-- Состояние: устройство выбрано (см. «Устройство»), кода пока нет.
+- Состояние: сервис, скрипт KWin, установка и PKGBUILD готовы; в AUR пакет ещё не опубликован.
 
 ## Владелец и правила
 
@@ -83,11 +83,20 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 
 ## Команды-справка
 
-Дополнить командами сборки сервиса и установки, когда они появятся.
-
+- Сборка и тесты сервиса: `make build`, `make check` (или `cargo build`/`cargo test`/`cargo clippy` в `service/`).
+- Установка для разработки (без root, в `~/.local` и `~/.config`): `./install.sh`; удаление: `./install.sh --uninstall`.
+  Повторный запуск обновляет установленное и перезапускает сервис.
+- Системная установка и упаковка: `make install DESTDIR=… PREFIX=/usr`; пути в unit-файлах подставляет `make`.
+- Пакет: `packaging/aur/muteonminimize-git/`. Проверить сборку: `makepkg -f` в копии каталога;
+  после правки PKGBUILD обновить `.SRCINFO`: `makepkg --printsrcinfo > .SRCINFO`.
+- Сервис:
+  - логи: `journalctl --user -u muteonminimized -f`;
+  - вызвать вручную: `busctl --user call io.github.belebob.MuteOnMinimize /io/github/belebob/MuteOnMinimize io.github.belebob.MuteOnMinimize1 SetMutedPids av 1 i <pid>`.
+    `busctl` сразу отключается от шины, и сервис тут же снимает заглушение — для проверок вызывать из временного скрипта KWin.
 - Скрипт KWin:
   - установить или обновить: `kpackagetool6 --type KWin/Script -i <папка>` или `-u <папка>`;
   - включить: `kwriteconfig6 --file kwinrc --group Plugins --key <id>Enabled true`, затем `qdbus6 org.kde.KWin /KWin reconfigure`.
 - Логи скрипта KWin (`print`/`console.log`): `journalctl --user -f | grep -i kwin`.
+- Настройки скрипта: `kwinrc`, группа `[Script-muteonminimize]`, ключ `Applications`.
 - Узлы и их свойства: `pw-dump`; параметры узла: `pw-cli enum-params <node> Props`.
 - Сохранённое состояние потоков WirePlumber: `~/.local/state/wireplumber/stream-properties`.
