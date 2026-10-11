@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=io.github.belebob.MuteOnMinimize
+Exec=/usr/bin/muteonminimized
+SystemdService=muteonminimized.service
