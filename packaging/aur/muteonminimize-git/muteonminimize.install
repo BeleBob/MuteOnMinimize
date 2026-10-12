@@ -1,0 +1,9 @@
+post_install() {
+  echo ":: Enable the script in System Settings → Window Management → KWin Scripts →"
+  echo "   Mute on Minimize, then list the applications to mute on its settings page."
+  echo "   The muteonminimized service starts on its own when the script needs it."
+}
+
+post_upgrade() {
+  echo ":: Restart the service to use the new version: systemctl --user try-restart muteonminimized"
+}
