@@ -18,7 +18,7 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="kcfg_Applications">
        <property name="placeholderText">
-        <string>firefox, discord, steam_app_287700</string>
+        <string notr="true">firefox, discord, steam_app_287700</string>
        </property>
       </widget>
      </item>
@@ -27,9 +27,44 @@
    <item>
     <widget class="QLabel" name="labelHelp">
      <property name="text">
-      <string>These applications are muted while all their windows are minimized. List window classes or desktop file names, separated by commas. To find a window's class, open System Settings → Window Management → Window Rules, add a rule and use Detect Window Properties.
-
-Requires the muteonminimized service.</string>
+      <string>These applications are muted while all their windows are minimized. List window classes or desktop file names, separated by commas.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_MuteInBackground">
+     <property name="text">
+      <string>Also mute when another window is in front of the application on its screen (for example, after Alt+Tab)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelWindowMenu">
+     <property name="text">
+      <string>You can also select the application of any window from its menu (Alt+F3 → Mute when minimized) or with the Meta+Ctrl+M shortcut.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelWindowClass">
+     <property name="text">
+      <string>To find a window's class, open Window Rules in System Settings, add a rule and click Detect Window Properties.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelService">
+     <property name="text">
+      <string>Requires the muteonminimized service.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

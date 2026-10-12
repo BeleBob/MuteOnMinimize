@@ -17,15 +17,28 @@ CARGO ?= cargo
 CARGOFLAGS ?= --locked
 BINARY := service/target/release/muteonminimized
 
+# Translations ship inside the KWin script package, where its settings page
+# and the service look for them.
+LANGS := $(basename $(notdir $(wildcard po/*.po)))
+MO = build/locale/$(1)/LC_MESSAGES/muteonminimize.mo
+
 UNIT := muteonminimized.service
 DBUS_SERVICE := io.github.belebob.MuteOnMinimize.service
 
-.PHONY: all build check install uninstall clean
+.PHONY: all build check check-script install uninstall clean
 
 all: build
 
-build:
+build: $(foreach lang,$(LANGS),$(call MO,$(lang)))
 	$(CARGO) build --release $(CARGOFLAGS) --manifest-path service/Cargo.toml
+
+# Needs node; not part of `check` so packaging does not depend on it.
+check-script:
+	node kwin-script/tests/main.test.js
+
+build/locale/%/LC_MESSAGES/muteonminimize.mo: po/%.po
+	@mkdir -p $(@D)
+	msgfmt --check -o $@ $<
 
 check:
 	$(CARGO) test --release $(CARGOFLAGS) --manifest-path service/Cargo.toml
@@ -42,6 +55,10 @@ install:
 	install -Dm644 kwin-script/contents/code/main.js $(DESTDIR)$(KWINSCRIPTDIR)/contents/code/main.js
 	install -Dm644 kwin-script/contents/config/main.xml $(DESTDIR)$(KWINSCRIPTDIR)/contents/config/main.xml
 	install -Dm644 kwin-script/contents/ui/config.ui $(DESTDIR)$(KWINSCRIPTDIR)/contents/ui/config.ui
+	for lang in $(LANGS); do \
+		install -Dm644 build/locale/$$lang/LC_MESSAGES/muteonminimize.mo \
+			$(DESTDIR)$(KWINSCRIPTDIR)/contents/locale/$$lang/LC_MESSAGES/muteonminimize.mo; \
+	done
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/muteonminimized
@@ -51,3 +68,4 @@ uninstall:
 
 clean:
 	$(CARGO) clean --manifest-path service/Cargo.toml
+	rm -rf build

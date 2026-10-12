@@ -11,6 +11,7 @@ use zbus::zvariant::{OwnedValue, Value};
 use zbus::{blocking, fdo, interface};
 
 use crate::audio::Msg;
+use crate::{i18n, kwinconfig};
 
 pub const BUS_NAME: &str = "io.github.belebob.MuteOnMinimize";
 pub const OBJECT_PATH: &str = "/io/github/belebob/MuteOnMinimize";
@@ -45,6 +46,21 @@ impl Service {
         self.tx
             .send(Msg::SetMutedPids(pids))
             .map_err(|_| fdo::Error::Failed("audio loop is not running".into()))
+    }
+
+    /// Saves the comma-separated list of applications to mute in the
+    /// script's settings; KWin scripts cannot write their own config.
+    fn set_applications(&self, applications: String) -> fdo::Result<()> {
+        if applications.len() > 4096 || applications.contains(['\n', '\r', '\0']) {
+            return Err(fdo::Error::InvalidArgs("invalid application list".into()));
+        }
+        kwinconfig::set_applications(&applications).map_err(fdo::Error::Failed)
+    }
+
+    /// Translations of the script's texts for the session language, as a
+    /// JSON object mapping English text to translated text.
+    fn translations(&self) -> String {
+        i18n::translations_json()
     }
 }
 

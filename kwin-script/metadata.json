@@ -8,8 +8,12 @@
         ],
         "Name": "Mute on Minimize",
         "Name[ru]": "Тишина при сворачивании",
+        "Name[uk]": "Тиша при згортанні",
+        "Name[de]": "Stumm beim Minimieren",
         "Description": "Mutes selected applications while all their windows are minimized",
         "Description[ru]": "Заглушает выбранные приложения, пока все их окна свёрнуты",
+        "Description[uk]": "Вимикає звук вибраних застосунків, поки всі їхні вікна згорнуто",
+        "Description[de]": "Schaltet ausgewählte Anwendungen stumm, solange alle ihre Fenster minimiert sind",
         "Icon": "audio-volume-muted",
         "Id": "muteonminimize",
         "Version": "0.1.0",
@@ -18,5 +22,6 @@
     },
     "X-Plasma-API": "javascript",
     "X-Plasma-MainScript": "code/main.js",
-    "X-KDE-ConfigModule": "kwin/effects/configs/kcm_kwin4_genericscripted"
+    "X-KDE-ConfigModule": "kwin/effects/configs/kcm_kwin4_genericscripted",
+    "X-KWin-Config-TranslationDomain": "muteonminimize"
 }
