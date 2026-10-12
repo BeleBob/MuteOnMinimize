@@ -225,16 +225,7 @@ fn parse_user_props(pod: &Pod) -> Option<UserProps> {
 }
 
 /// Runs the PipeWire loop until SIGTERM or SIGINT.
-///
-/// `start` is called once the loop is ready to receive messages; whatever it
-/// returns is kept alive until the loop exits.
-pub fn run<T, E>(
-    rx: pw::channel::Receiver<Msg>,
-    start: impl FnOnce() -> Result<T, E>,
-) -> Result<(), Box<dyn Error>>
-where
-    E: Into<Box<dyn Error>>,
-{
+pub fn run(rx: pw::channel::Receiver<Msg>) -> Result<(), Box<dyn Error>> {
     let main_loop = pw::main_loop::MainLoopRc::new(None)?;
     let context = pw::context::ContextRc::new(&main_loop, None)?;
     let core = context.connect_rc(None)?;
@@ -388,7 +379,6 @@ where
         move || shutdown()
     });
 
-    let _started = start().map_err(Into::into)?;
     main_loop.run();
 
     if failed.get() {
