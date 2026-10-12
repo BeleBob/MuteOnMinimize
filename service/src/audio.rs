@@ -1,5 +1,5 @@
 //! Tracks PipeWire output streams and soft-mutes the ones that belong to
-//! muted processes, fading them out and back in over a second.
+//! muted processes, fading them out over a second; sound comes back at once.
 //!
 //! Streams are silenced through `softMute` in the node's Props rather than
 //! `mute`: WirePlumber persists `mute` per application, so an app closed while
@@ -39,7 +39,7 @@ use crate::proctree;
 /// means the echo accounting is off; stop rather than spin.
 const MAX_BLIND_REAPPLIES: u32 = 8;
 
-/// How long a fade out or in takes, and how often its volume is updated.
+/// How long a fade out takes, and how often its volume is updated.
 const FADE: Duration = Duration::from_secs(1);
 const TICK: Duration = Duration::from_millis(20);
 
@@ -154,9 +154,9 @@ impl Stream {
         self.is_fading()
     }
 
-    /// Updates whether the stream should be silent. With `fade`, a change is
+    /// Updates whether the stream should be silent. With `fade`, muting is
     /// left to the timer when the volumes are known and the user has not
-    /// muted it; otherwise it takes effect at once.
+    /// muted it; unmuting, even mid-fade, always takes effect at once.
     fn sync(&mut self, roots: &HashSet<u32>, fade: bool) {
         let wanted = self.pid.is_some_and(|pid| proctree::in_trees(pid, roots));
         if wanted == self.wanted {
@@ -170,7 +170,7 @@ impl Stream {
             self.name,
             self.pid
         );
-        if !(fade && self.user_volumes().is_some() && !self.user_mute()) {
+        if !(wanted && fade && self.user_volumes().is_some() && !self.user_mute()) {
             self.level = self.target();
             self.apply();
         }
