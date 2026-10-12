@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR MuteOnMinimize contributors
+# This file is distributed under the same license as the muteonminimize package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: muteonminimize\n"
+"Report-Msgid-Bugs-To: https://github.com/BeleBob/MuteOnMinimize/issues\n"
+"POT-Creation-Date: 2026-10-12 18:08+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: kwin-script/contents/ui/config.ui:11
+msgid "Applications:"
+msgstr ""
+
+#: kwin-script/contents/ui/config.ui:30
+msgid "These applications are muted while all their windows are minimized. List window classes or desktop file names, separated by commas."
+msgstr ""
+
+#: kwin-script/contents/ui/config.ui:40
+msgid "Also mute when another window is in front of the application on its screen (for example, after Alt+Tab)"
+msgstr ""
+
+#: kwin-script/contents/ui/config.ui:47
+msgid "You can also select the application of any window from its menu (Alt+F3 → Mute when minimized) or with the Meta+Ctrl+M shortcut."
+msgstr ""
+
+#: kwin-script/contents/ui/config.ui:57
+msgid "To find a window's class, open Window Rules in System Settings, add a rule and click Detect Window Properties."
+msgstr ""
+
+#: kwin-script/contents/ui/config.ui:67
+msgid "Requires the muteonminimized service."
+msgstr ""
+
+#: kwin-script/contents/code/main.js:136
+msgid "%1: not muted when minimized"
+msgstr ""
+
+#: kwin-script/contents/code/main.js:136
+msgid "%1: muted when minimized"
+msgstr ""
+
+#: kwin-script/contents/code/main.js:182
+msgid "Mute when minimized"
+msgstr ""
+
+#: kwin-script/contents/code/main.js:197
+msgid "Mute on Minimize: toggle for the active window"
+msgstr ""

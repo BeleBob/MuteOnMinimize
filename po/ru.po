@@ -1,0 +1,56 @@
+# Russian translation of MuteOnMinimize.
+# This file is distributed under the same license as the muteonminimize package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: muteonminimize\n"
+"Report-Msgid-Bugs-To: https://github.com/BeleBob/MuteOnMinimize/issues\n"
+"POT-Creation-Date: 2026-10-12 18:08+0300\n"
+"PO-Revision-Date: 2026-10-12 18:00+0300\n"
+"Last-Translator: MuteOnMinimize contributors\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: kwin-script/contents/ui/config.ui:11
+msgid "Applications:"
+msgstr "Приложения:"
+
+#: kwin-script/contents/ui/config.ui:30
+msgid "These applications are muted while all their windows are minimized. List window classes or desktop file names, separated by commas."
+msgstr "Эти приложения глушатся, пока все их окна свёрнуты. Перечислите через запятую классы окон или имена desktop-файлов."
+
+#: kwin-script/contents/ui/config.ui:40
+msgid "Also mute when another window is in front of the application on its screen (for example, after Alt+Tab)"
+msgstr "Глушить и тогда, когда на его экране впереди другое окно (например, после Alt+Tab)"
+
+#: kwin-script/contents/ui/config.ui:47
+msgid "You can also select the application of any window from its menu (Alt+F3 → Mute when minimized) or with the Meta+Ctrl+M shortcut."
+msgstr "Приложение любого окна можно отметить и через меню окна (Alt+F3 → «Глушить при сворачивании») или сочетанием клавиш Meta+Ctrl+M."
+
+#: kwin-script/contents/ui/config.ui:57
+msgid "To find a window's class, open Window Rules in System Settings, add a rule and click Detect Window Properties."
+msgstr "Класс окна можно узнать в «Параметрах системы» → «Особые параметры окон»: добавьте правило и нажмите «Определить свойства окна»."
+
+#: kwin-script/contents/ui/config.ui:67
+msgid "Requires the muteonminimized service."
+msgstr "Нужна служба muteonminimized."
+
+#: kwin-script/contents/code/main.js:136
+msgid "%1: not muted when minimized"
+msgstr "%1: не глушится при сворачивании"
+
+#: kwin-script/contents/code/main.js:136
+msgid "%1: muted when minimized"
+msgstr "%1: глушится при сворачивании"
+
+#: kwin-script/contents/code/main.js:182
+msgid "Mute when minimized"
+msgstr "Глушить при сворачивании"
+
+#: kwin-script/contents/code/main.js:197
+msgid "Mute on Minimize: toggle for the active window"
+msgstr "Тишина при сворачивании: переключить для активного окна"
