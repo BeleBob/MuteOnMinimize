@@ -8,8 +8,9 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 заглушаются, пока свёрнуты все их окна, и снова звучат, когда окно развернули.
 
 - Репозиторий: github.com/BeleBob/MuteOnMinimize (публичный), лицензия GPL-3.0-or-later.
-- Состояние: версия 0.1.0 (см. CHANGELOG.md); пакеты `muteonminimize` и `muteonminimize-git` готовы,
-  в AUR ещё не опубликованы (нужен аккаунт владельца).
+- Состояние: выпущена 0.1.0 (релиз на GitHub с готовым пакетом); изменения после неё — в CHANGELOG.md, «Unreleased».
+  Пакеты AUR готовы, но не опубликованы: регистрация в AUR временно закрыта, аккаунта у владельца нет.
+- Документация: README.md (ru), README.en.md, docs/ARCHITECTURE.md, CONTRIBUTING.md (en); CI — `.github/workflows/ci.yml`.
 
 ## Владелец и правила
 
@@ -106,6 +107,9 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
   У владельца Meta+D переназначен на сценарий KWin `minimizeall` («Сворачивание всех окон»).
 - **Переводы страницы настроек.** `kcm_kwin4_genericscripted` берёт домен из `X-KWin-Config-TranslationDomain`
   в metadata.json и каталоги из `contents/locale` пакета. Перевод `.ui` — по msgid без контекста.
+- **Скриншоты страницы настроек:** `LANGUAGE=<lang> kcmshell6 kwin/effects/configs/kcm_kwin4_genericscripted
+  --args "muteonminimize KWin/Script"`, окно увеличить скриптом KWin (`frameGeometry`), снять `spectacle -b -n -a -o <файл>`.
+  Длинный текст у `QCheckBox` не переносится и растягивает страницу — пояснения выносить в `QLabel` с `wordWrap`.
 - **Живые тесты с фокусом** ненадёжны, пока владелец работает за ПК: фокус уходит в его окна.
   Логику окон проверять на макете: `make check-script`.
 
@@ -136,9 +140,9 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 - Системная установка и упаковка: `make install DESTDIR=… PREFIX=/usr`; пути в unit-файлах подставляет `make`.
 - Пакет: `packaging/aur/muteonminimize-git/`. Проверить сборку: `makepkg -f` в копии каталога;
   после правки PKGBUILD обновить `.SRCINFO`: `makepkg --printsrcinfo > .SRCINFO`.
-- Выпуск версии: поднять `version` в `service/Cargo.toml` и `Version` в `kwin-script/metadata.json`,
-  записать изменения в CHANGELOG.md, после слияния — `gh release create v<версия> --target main`;
-  в `packaging/aur/muteonminimize/PKGBUILD` поменять `pkgver` и обновить `.SRCINFO`.
+- Выпуск версии — по CONTRIBUTING.md («Releases»). Важно: у владельца в makepkg.conf `-march=native` и
+  `RUSTFLAGS=-C target-cpu=native`; пакет для релиза собирать с `makepkg --config <копия /etc/makepkg.conf
+  с флагами Arch по умолчанию>` и проверять, что в бинарнике нет AVX (`objdump -d … | grep ymm`).
 - Сервис:
   - логи: `journalctl --user -u muteonminimized -f`;
   - вызвать вручную: `busctl --user call io.github.belebob.MuteOnMinimize /io/github/belebob/MuteOnMinimize io.github.belebob.MuteOnMinimize1 SetMutedPids av 1 i <pid>`.
