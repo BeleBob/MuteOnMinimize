@@ -389,9 +389,12 @@ pub fn run(rx: pw::channel::Receiver<Msg>) -> Result<(), Box<dyn Error>> {
         .error({
             let main_loop = main_loop.downgrade();
             let failed = failed.clone();
-            move |id, _seq, _res, message| {
+            move |id, _seq, res, message| {
                 eprintln!("PipeWire error on object {id}: {message}");
-                if id == pw::core::PW_ID_CORE {
+                // Only a broken connection is fatal. Other errors on the core
+                // are races, such as asking for the params of a stream the
+                // server has just removed ("unknown resource").
+                if id == pw::core::PW_ID_CORE && res == -libc::EPIPE {
                     failed.set(true);
                     if let Some(main_loop) = main_loop.upgrade() {
                         main_loop.quit();
