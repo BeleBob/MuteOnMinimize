@@ -8,8 +8,8 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 заглушаются, пока свёрнуты все их окна, и снова звучат, когда окно развернули.
 
 - Репозиторий: github.com/BeleBob/MuteOnMinimize (публичный), лицензия GPL-3.0-or-later.
-- Состояние: сервис, скрипт KWin (меню окна, сочетание клавиш, режим «в фоне»), переводы ru/uk/de,
-  установка и PKGBUILD готовы; в AUR пакет ещё не опубликован.
+- Состояние: версия 0.1.0 (см. CHANGELOG.md); пакеты `muteonminimize` и `muteonminimize-git` готовы,
+  в AUR ещё не опубликованы (нужен аккаунт владельца).
 
 ## Владелец и правила
 
@@ -57,6 +57,11 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
     по `LANGUAGE`, `LC_ALL`, `LC_MESSAGES`, `LANG`; свой разбор `.mo`, без зависимостей.
   - Следит за узлами `Stream/Output/Audio`. Поток глушится, если его `application.process.id`
     равен PID из списка или это потомок такого процесса (дерево из `/proc`).
+  - Flatpak: у потока `application.process.id` — PID внутри песочницы; по `pipewire.access.portal.instance_id`
+    из `$XDG_RUNTIME_DIR/.flatpak/<id>/bwrapinfo.json` берётся `pid-namespace`, и в `/proc` ищется процесс
+    этого пространства с таким последним числом в `NSpid` (`sandbox.rs`).
+  - Фатальна только ошибка ядра PipeWire с `-EPIPE` (потеря связи); остальные (например, «unknown resource»
+    после удаления потока) — гонки, их только пишем в лог.
   - Глушит через `softMute` в `Props` узла, а не через `mute` (почему — см. ниже).
     Следит за `Props` заглушённых узлов и ставит `softMute` заново, если его сбросили.
   - Глушение с затуханием за 1 с: таймер цикла PipeWire раз в 20 мс ставит `softVolumes` =
@@ -75,7 +80,10 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
     поэтому сопоставлять по имени бинарника нельзя.
   - Electron (Discord): поток идёт из дочернего `--utility-sub-type=audio.mojom.AudioService`,
     его родитель — процесс окна. Поэтому нужен поиск по дереву процессов.
-  - Не проверено: Chromium, Flatpak (у Flatpak свой PID-namespace, `application.process.id` может не совпасть).
+  - Flatpak: KWin видит у окна PID на хосте, а поток — PID внутри песочницы (обычно 2), плюс
+    `pipewire.access.portal.instance_id`; `pipewire.sec.pid` клиента — снова pipewire-pulse.
+    Проверено на окне и звуке одного `gst-launch-1.0` в песочнице Sober.
+  - Chromium не проверялся (не установлен): у него, как у Electron, звук из дочернего аудиосервиса.
 - **WirePlumber запоминает `mute`.** `node.stream.restore-props` сохраняет `mute`, `volume`, `channelVolumes`
   и `channelMap` в `~/.local/state/wireplumber/stream-properties` по ключу `application.name`
   (точнее, по первому из `application.id`, `application.name`, `media.name`, `node.name`).
@@ -128,6 +136,9 @@ MuteOnMinimize — дополнение для KDE Plasma 6. Выбранные 
 - Системная установка и упаковка: `make install DESTDIR=… PREFIX=/usr`; пути в unit-файлах подставляет `make`.
 - Пакет: `packaging/aur/muteonminimize-git/`. Проверить сборку: `makepkg -f` в копии каталога;
   после правки PKGBUILD обновить `.SRCINFO`: `makepkg --printsrcinfo > .SRCINFO`.
+- Выпуск версии: поднять `version` в `service/Cargo.toml` и `Version` в `kwin-script/metadata.json`,
+  записать изменения в CHANGELOG.md, после слияния — `gh release create v<версия> --target main`;
+  в `packaging/aur/muteonminimize/PKGBUILD` поменять `pkgver` и обновить `.SRCINFO`.
 - Сервис:
   - логи: `journalctl --user -u muteonminimized -f`;
   - вызвать вручную: `busctl --user call io.github.belebob.MuteOnMinimize /io/github/belebob/MuteOnMinimize io.github.belebob.MuteOnMinimize1 SetMutedPids av 1 i <pid>`.
