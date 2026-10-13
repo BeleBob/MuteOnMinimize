@@ -1,0 +1,11 @@
+name: Feature request / Предложение
+description: An idea for MuteOnMinimize. Можно писать по-русски.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like / Что хочется
+      description: What should happen, and in which situation would it help?
+    validations:
+      required: true
