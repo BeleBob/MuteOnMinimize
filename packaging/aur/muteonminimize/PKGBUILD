@@ -1,7 +1,7 @@
 # Maintainer: BeleBob <https://github.com/BeleBob>
 pkgname=muteonminimize
 _repo=MuteOnMinimize
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="KDE Plasma 6 add-on that mutes selected applications while all their windows are minimized"
 arch=('x86_64' 'aarch64')

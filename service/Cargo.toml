@@ -1,6 +1,6 @@
 [package]
 name = "muteonminimized"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Mutes applications while all their windows are minimized (service part of MuteOnMinimize)"
 license = "GPL-3.0-or-later"

@@ -35,7 +35,7 @@ Requires KDE Plasma 6 (Wayland or X11) and PipeWire.
 The package from the [latest release](https://github.com/BeleBob/MuteOnMinimize/releases/latest):
 
 ```sh
-sudo pacman -U https://github.com/BeleBob/MuteOnMinimize/releases/download/v0.1.0/muteonminimize-0.1.0-1-x86_64.pkg.tar.zst
+sudo pacman -U https://github.com/BeleBob/MuteOnMinimize/releases/download/v0.1.1/muteonminimize-0.1.1-1-x86_64.pkg.tar.zst
 ```
 
 The AUR packages `muteonminimize` and `muteonminimize-git` are ready and will be published once the AUR

@@ -1,6 +1,6 @@
 pkgbase = muteonminimize
 	pkgdesc = KDE Plasma 6 add-on that mutes selected applications while all their windows are minimized
-	pkgver = 0.1.0
+	pkgver = 0.1.1
 	pkgrel = 1
 	url = https://github.com/BeleBob/MuteOnMinimize
 	install = muteonminimize.install
@@ -17,7 +17,7 @@ pkgbase = muteonminimize
 	depends = pipewire
 	depends = kwin
 	depends = kconfig
-	source = git+https://github.com/BeleBob/MuteOnMinimize.git#tag=v0.1.0
+	source = git+https://github.com/BeleBob/MuteOnMinimize.git#tag=v0.1.1
 	sha256sums = SKIP
 
 pkgname = muteonminimize

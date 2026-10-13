@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.1 — 2026-10-13
 
 - The settings page no longer overflows sideways in English: the background option has a short
   checkbox label and a wrapped explanation below it.

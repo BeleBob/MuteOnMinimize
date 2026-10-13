@@ -16,7 +16,7 @@
         "Description[de]": "Schaltet ausgewählte Anwendungen stumm, solange alle ihre Fenster minimiert sind",
         "Icon": "audio-volume-muted",
         "Id": "muteonminimize",
-        "Version": "0.1.0",
+        "Version": "0.1.1",
         "License": "GPL-3.0-or-later",
         "Website": "https://github.com/BeleBob/MuteOnMinimize"
     },
