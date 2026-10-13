@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- The settings page no longer overflows sideways in English: the background option has a short
+  checkbox label and a wrapped explanation below it.
+
 ## 0.1.0 — 2026-10-13
 
 First release.

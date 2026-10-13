@@ -1,0 +1,40 @@
+name: Bug report / Ошибка
+description: Something does not work as described. Можно писать по-русски.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens / Что происходит
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: application
+    attributes:
+      label: Application / Приложение
+      description: The application and its window class as listed in the settings, e.g. `firefox`, `steam_app_287700`.
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installed with / Способ установки
+      options:
+        - Release package (pacman -U)
+        - AUR
+        - install.sh
+        - make install
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions / Версии
+      description: MuteOnMinimize, Plasma, PipeWire, distribution; Wayland or X11.
+      placeholder: 0.1.0, Plasma 6.7.5, PipeWire 1.6.8, CachyOS, Wayland
+  - type: textarea
+    id: logs
+    attributes:
+      label: Service log / Журнал службы
+      description: Output of `journalctl --user -u muteonminimized -n 50`.
+      render: text
