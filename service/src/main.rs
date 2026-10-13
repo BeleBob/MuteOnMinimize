@@ -6,6 +6,7 @@ mod dbus;
 mod i18n;
 mod kwinconfig;
 mod proctree;
+mod sandbox;
 
 use std::process::ExitCode;
 
