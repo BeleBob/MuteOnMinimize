@@ -33,7 +33,7 @@ use spa::pod::deserialize::PodDeserializer;
 use spa::pod::serialize::PodSerializer;
 use spa::pod::{Object, Pod, Property, Value, ValueArray};
 
-use crate::proctree;
+use crate::{proctree, sandbox};
 
 /// Re-applying more often than this without any visible volume or mute change
 /// means the echo accounting is off; stop rather than spin.
@@ -231,13 +231,20 @@ impl State {
         {
             // Pulse streams carry the app's PID on the node (their client is
             // pipewire-pulse itself); native streams only have it on the client.
-            let pid = props
+            // A Flatpak app reports its PID inside the sandbox, which has to
+            // be translated; if that fails, the client's PID is still right
+            // for native streams.
+            let own_pid = props
                 .get("application.process.id")
-                .and_then(|p| p.parse().ok())
-                .or_else(|| {
-                    let client: u32 = props.get("client.id")?.parse().ok()?;
-                    self.client_pids.get(&client).copied()
-                });
+                .and_then(|p| p.parse().ok());
+            let pid = match props.get("pipewire.access.portal.instance_id") {
+                Some(instance) => own_pid.and_then(|inner| sandbox::host_pid(instance, inner)),
+                None => own_pid,
+            }
+            .or_else(|| {
+                let client: u32 = props.get("client.id")?.parse().ok()?;
+                self.client_pids.get(&client).copied()
+            });
             if pid.is_some() {
                 stream.pid = pid;
             }
@@ -382,9 +389,12 @@ pub fn run(rx: pw::channel::Receiver<Msg>) -> Result<(), Box<dyn Error>> {
         .error({
             let main_loop = main_loop.downgrade();
             let failed = failed.clone();
-            move |id, _seq, _res, message| {
+            move |id, _seq, res, message| {
                 eprintln!("PipeWire error on object {id}: {message}");
-                if id == pw::core::PW_ID_CORE {
+                // Only a broken connection is fatal. Other errors on the core
+                // are races, such as asking for the params of a stream the
+                // server has just removed ("unknown resource").
+                if id == pw::core::PW_ID_CORE && res == -libc::EPIPE {
                     failed.set(true);
                     if let Some(main_loop) = main_loop.upgrade() {
                         main_loop.quit();

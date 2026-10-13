@@ -1,0 +1,37 @@
+# Maintainer: BeleBob <https://github.com/BeleBob>
+pkgname=muteonminimize
+_repo=MuteOnMinimize
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="KDE Plasma 6 add-on that mutes selected applications while all their windows are minimized"
+arch=('x86_64' 'aarch64')
+url="https://github.com/BeleBob/MuteOnMinimize"
+license=('GPL-3.0-or-later')
+depends=('glibc' 'libgcc' 'libpipewire' 'pipewire' 'kwin' 'kconfig')
+makedepends=('git' 'cargo' 'clang' 'gettext')
+install=muteonminimize.install
+source=("git+$url.git#tag=v$pkgver")
+sha256sums=('SKIP')
+
+prepare() {
+  cd "$_repo/service"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$_repo"
+  export RUSTUP_TOOLCHAIN=stable
+  make build CARGOFLAGS=--frozen
+}
+
+check() {
+  cd "$_repo"
+  export RUSTUP_TOOLCHAIN=stable
+  make check CARGOFLAGS=--frozen
+}
+
+package() {
+  cd "$_repo"
+  make install DESTDIR="$pkgdir" PREFIX=/usr
+}
