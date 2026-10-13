@@ -35,7 +35,7 @@
 Готовый пакет из [последнего релиза](https://github.com/BeleBob/MuteOnMinimize/releases/latest):
 
 ```sh
-sudo pacman -U https://github.com/BeleBob/MuteOnMinimize/releases/download/v0.1.0/muteonminimize-0.1.0-1-x86_64.pkg.tar.zst
+sudo pacman -U https://github.com/BeleBob/MuteOnMinimize/releases/download/v0.1.1/muteonminimize-0.1.1-1-x86_64.pkg.tar.zst
 ```
 
 Пакеты `muteonminimize` и `muteonminimize-git` для AUR готовы и появятся там, когда AUR снова откроет
