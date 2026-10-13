@@ -37,7 +37,17 @@
    <item>
     <widget class="QCheckBox" name="kcfg_MuteInBackground">
      <property name="text">
-      <string>Also mute when another window is in front of the application on its screen (for example, after Alt+Tab)</string>
+      <string>Mute in the background too</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelBackground">
+     <property name="text">
+      <string>An application is in the background when another window is in front of it on its screen, for example after Alt+Tab. Windows on other monitors do not count.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
